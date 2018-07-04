@@ -116,10 +116,18 @@ namespace GoogleARCore.Examples.HelloAR
                 }
                 else
                 {
-                    // Instantiate Andy model at the hit pose.
+
+    public GameObject[] ObjectToSpawnPrefab; //size gets set in inspector! drag prefabs in there!
+    public GameObject[] andyObject;
+            // Instantiate Andy model at the hit pose.
                     for (int i = 0; i < ObjectToSpawnPrefab.Length; i++)
                     {
-                        var andyObject = Instantiate(ObjectToSpawnPrefab[i], hit.Pose.position, hit.Pose.rotation);
+                       
+        andyObject = new GameObject[ObjectToSpawnPrefab.Length]; //makes sure they match length
+        for (int i = 0; i < ObjectToSpawnPrefab.Length; i++)
+        {
+             andyObject[i] = Instantiate(ObjectToSpawnPrefab[i], hit.Pose.position, hit.Pose.rotation);
+             var andyObject 
                         // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
                         andyObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
 
@@ -129,7 +137,7 @@ namespace GoogleARCore.Examples.HelloAR
 
                         // Make Andy model a child of the anchor.
                         andyObject.transform.parent = anchor.transform;
-
+        }
                     }
 
                    
