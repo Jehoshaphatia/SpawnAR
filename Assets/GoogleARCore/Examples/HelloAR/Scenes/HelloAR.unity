@@ -269,6 +269,9 @@ MonoBehaviour:
     type: 2}
   ObjectToSpawnPrefab:
   - {fileID: 1344212869780430, guid: 5ed716b347098fd408f04aac5c1ec640, type: 2}
+  - {fileID: 1190091649889860, guid: 242a320930b81430ba610f94f9b760c8, type: 2}
+  - {fileID: 100036, guid: 3ba44afe9035c5e409c30bae1ec51c36, type: 3}
+  andyObject: []
   SearchingForPlaneUI: {fileID: 1133631540}
 --- !u!20 &896679035 stripped
 Camera:
