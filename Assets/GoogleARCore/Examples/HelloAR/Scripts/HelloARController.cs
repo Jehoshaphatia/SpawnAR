@@ -117,6 +117,11 @@ namespace GoogleARCore.Examples.HelloAR
                 else
                 {
                     // Instantiate Andy model at the hit pose.
+                    for (int i = 0; i < ObjectToSpawnPrefab.Length; i++)
+                    {
+                        var andyObject = Instantiate(ObjectToSpawnPrefab[i], hit.Pose.position, hit.Pose.rotation);
+
+                    }
                     var andyObject = Instantiate(AndyAndroidPrefab, hit.Pose.position, hit.Pose.rotation);
 
                     // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
