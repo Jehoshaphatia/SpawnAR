@@ -120,19 +120,19 @@ namespace GoogleARCore.Examples.HelloAR
                     for (int i = 0; i < ObjectToSpawnPrefab.Length; i++)
                     {
                         var andyObject = Instantiate(ObjectToSpawnPrefab[i], hit.Pose.position, hit.Pose.rotation);
+                        // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
+                        andyObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
+
+                        // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
+                        // world evolves.
+                        var anchor = hit.Trackable.CreateAnchor(hit.Pose);
+
+                        // Make Andy model a child of the anchor.
+                        andyObject.transform.parent = anchor.transform;
 
                     }
-                    var andyObject = Instantiate(AndyAndroidPrefab, hit.Pose.position, hit.Pose.rotation);
 
-                    // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
-                    andyObject.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
-
-                    // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
-                    // world evolves.
-                    var anchor = hit.Trackable.CreateAnchor(hit.Pose);
-
-                    // Make Andy model a child of the anchor.
-                    andyObject.transform.parent = anchor.transform;
+                   
                 }
             }
         }
