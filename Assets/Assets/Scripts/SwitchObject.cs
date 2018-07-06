@@ -16,7 +16,7 @@ public class SwitchObject : MonoBehaviour {
 		
 	}
 
-    void OnMouseDown() 
+    public void OnMouseDown() 
     {
         switch (direction)
         { 
