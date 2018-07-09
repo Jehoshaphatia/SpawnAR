@@ -50,8 +50,6 @@ namespace GoogleARCore.Examples.HelloAR
         /// </summary>
         public GameObject[] ObjectToSpawnPrefab; //size gets set in inspector! drag prefabs in there!
         public GameObject[] andyObject;
-        private int numbersOfObjectsAllowed;
-        private int numberOfObjects;
 
         /// <summary>
         /// A gameobject parenting UI for displaying the "searching for planes" snackbar.
@@ -119,21 +117,20 @@ namespace GoogleARCore.Examples.HelloAR
                 }
                 else
                 {
-                    if (numberOfObjects <= ObjectToSpawnPrefab.Length)
+                    // Instantiate Andy model at the hit pose.                                    
+                    andyObject = new GameObject[ObjectToSpawnPrefab.Length]; //makes sure they match length
+                    for (int i = 0; i < ObjectToSpawnPrefab.Length; i++)
                     {
+                        andyObject[i] = Instantiate(ObjectToSpawnPrefab[i], hit.Pose.position, hit.Pose.rotation);
+                        // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
+                        andyObject[i].transform.Rotate(0, k_ModelRotation, 0, Space.Self);
+
                         // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
                         // world evolves.
                         var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
                         // Make Andy model a child of the anchor.
-                        andyObject[numberOfObjects].transform.parent = anchor.transform;
-                        // Instantiate Andy model at the hit pose.                                    
-                        andyObject = new GameObject[ObjectToSpawnPrefab.Length]; //makes sure they match length
-
-                        andyObject[numberOfObjects] = Instantiate(ObjectToSpawnPrefab[numberOfObjects], hit.Pose.position, hit.Pose.rotation);
-                        // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
-                        andyObject[numberOfObjects].transform.Rotate(0, k_ModelRotation, 0, Space.Self);
-
+                        andyObject[i].transform.parent = anchor.transform;
                     }
                 }
             }
