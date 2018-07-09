@@ -51,6 +51,9 @@ namespace GoogleARCore.Examples.HelloAR
         public GameObject[] ObjectToSpawnPrefab; //size gets set in inspector! drag prefabs in there!
         public GameObject[] andyObject;
 
+        private GameObject modelInstance;
+        public GameObject[] models;
+
         /// <summary>
         /// A gameobject parenting UI for displaying the "searching for planes" snackbar.
         /// </summary>
@@ -117,17 +120,25 @@ namespace GoogleARCore.Examples.HelloAR
                 }
                 else
                 {
+                    GameObject modelItem = models[Random.Range(0, models.Length)];
+
+                    Anchor anchor = hit.Trackable.CreateAnchor(hit.Pose);
+
+                    modelInstance = Instantiate(modelItem, hit.Pose.position, hit.Pose.rotation);
+                    modelInstance.transform.Rotate(0, k_ModelRotation, 0, Space.Self);
+                    modelInstance.transform.SetParent(anchor.transform);
+
                     // Instantiate Andy model at the hit pose.                                    
                     andyObject = new GameObject[ObjectToSpawnPrefab.Length]; //makes sure they match length
                     for (int i = 0; i < ObjectToSpawnPrefab.Length; i++)
                     {
-                        andyObject[i] = Instantiate(ObjectToSpawnPrefab[i], hit.Pose.position, hit.Pose.rotation);
+                       // andyObject[i] = Instantiate(ObjectToSpawnPrefab[i], hit.Pose.position, hit.Pose.rotation);
                         // Compensate for the hitPose rotation facing away from the raycast (i.e. camera).
-                        andyObject[i].transform.Rotate(0, k_ModelRotation, 0, Space.Self);
+                       // andyObject[i].transform.Rotate(0, k_ModelRotation, 0, Space.Self);
 
                         // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
                         // world evolves.
-                        var anchor = hit.Trackable.CreateAnchor(hit.Pose);
+                        //var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
                         // Make Andy model a child of the anchor.
                         andyObject[i].transform.parent = anchor.transform;
